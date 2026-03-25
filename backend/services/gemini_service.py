@@ -1,4 +1,3 @@
-import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
@@ -8,11 +7,22 @@ class GeminiService:
     """Service for interacting with Google's Gemini API"""
     
     def __init__(self):
+        self.model = None
+        self.init_error = None
+
         api_key = os.getenv('GEMINI_API_KEY')
         if not api_key:
-            raise ValueError("GEMINI_API_KEY not found in environment variables")
-        
-        genai.configure(api_key=api_key)
+            self.init_error = 'GEMINI_API_KEY not found in environment variables'
+            return
+
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=api_key)
+            # Keep constructor compatible with older google-generativeai versions.
+            self.model = genai.GenerativeModel('gemini-2.5-flash')
+        except Exception as e:
+            self.init_error = f'Gemini initialization failed: {e}'
+            self.model = None
         
         self.behavior_instructions = (
             "You are a precise assistant. "
@@ -25,9 +35,6 @@ class GeminiService:
             "Avoid verbose filler."
         )
 
-        # Keep constructor compatible with older google-generativeai versions.
-        self.model = genai.GenerativeModel('gemini-2.5-flash')
-        
     def generate_response(self, prompt, context=None):
         """
         Generate a response using Gemini API
@@ -39,6 +46,13 @@ class GeminiService:
         Returns:
             str: Generated response from Gemini
         """
+        if self.model is None:
+            print(f"Gemini unavailable: {self.init_error}")
+            return (
+                "AI response service is temporarily unavailable due to a server dependency issue. "
+                "Please try again shortly."
+            )
+
         try:
             # Prepare the prompt with context if available
             if context and len(context) > 0:
