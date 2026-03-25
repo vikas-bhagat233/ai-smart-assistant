@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI Smart Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Smart Assistant</span>
+                </div>
+                <h2>Welcome Back</h2>
+                <p>Login to continue your AI journey</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+
+            <button id="toggleForgotPassword" type="button" class="text-link-btn">Forgot password?</button>
+
+            <form id="forgotPasswordForm" class="auth-form" hidden>
+                <div class="form-group">
+                    <label for="recoveryEmail">Email Address</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="recoveryEmail" name="recoveryEmail" placeholder="Enter your account email">
+                    </div>
+                </div>
+
+                <button id="getSecurityQuestionBtn" type="button" class="btn-submit secondary-btn">Get Security Question</button>
+
+                <div id="securityQuestionWrap" class="form-group" hidden>
+                    <label id="securityQuestionLabel" for="securityAnswer">Security Question</label>
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your answer">
+                    </div>
+                </div>
+
+                <div id="newPasswordWrap" class="form-group" hidden>
+                    <label for="newPassword">Choose New Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="newPassword" name="newPassword" placeholder="At least 6 characters">
+                    </div>
+                </div>
+
+                <button id="resetPasswordBtn" type="submit" class="btn-submit" hidden>Reset Password</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+    <script src="js/auth.js"></script>
+</body>
+</html>

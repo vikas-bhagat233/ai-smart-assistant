@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Smart Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Assistant</span>
+                </div>
+                <button id="newChatBtn" class="new-chat-btn">
+                    <i class="fas fa-plus"></i>
+                    New Chat
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="history-header">
+                    <i class="fas fa-history"></i>
+                    <span>Recent Chats</span>
+                </div>
+                <div class="history-tools">
+                    <input id="chatSearchInput" type="text" placeholder="Search chats...">
+                </div>
+                <div id="chatHistoryList" class="chat-history-list">
+                    <!-- Chat history items will be loaded here -->
+                </div>
+
+                <div class="groups-panel">
+                    <div class="history-header">
+                        <i class="fas fa-user-group"></i>
+                        <span>Private Groups</span>
+                    </div>
+                    <div class="group-actions">
+                        <button id="createGroupBtn" class="header-action-btn small">Create Group</button>
+                        <button id="joinGroupBtn" class="header-action-btn small">Join via Link</button>
+                    </div>
+                    <div class="group-actions">
+                        <button id="exitGroupBtn" class="header-action-btn small">Exit Group</button>
+                        <button id="deleteGroupBtn" class="header-action-btn small stop">Delete Group</button>
+                    </div>
+                    <div id="groupList" class="chat-history-list"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user-gear"></i>
+                    Profile
+                </a>
+                <div class="theme-picker">
+                    <label for="chatThemeSelect">Chat Theme</label>
+                    <select id="chatThemeSelect">
+                        <option value="indigo">Indigo</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="mono">Mono</option>
+                    </select>
+                </div>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <div class="chat-header">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="usernameDisplay"></span>
+                </div>
+                <div id="responseTimer" class="response-timer" hidden>
+                    <i class="fas fa-clock"></i>
+                    <span id="responseTimerValue">0.0s</span>
+                </div>
+                <div class="chat-actions">
+                    <button id="attachDocBtn" class="header-action-btn" title="Upload document">
+                        <i class="fas fa-file-upload"></i>
+                        Upload
+                    </button>
+                    <button id="uploadGroupImageBtn" class="header-action-btn" title="Upload image in group">
+                        <i class="fas fa-image"></i>
+                        Group Image
+                    </button>
+                    <button id="createImageBtn" class="header-action-btn" title="Generate image">
+                        <i class="fas fa-image"></i>
+                        Image
+                    </button>
+                    <button id="voiceInputBtn" class="header-action-btn" title="Voice input">
+                        <i class="fas fa-microphone"></i>
+                        Voice
+                    </button>
+                    <button id="voiceReadBtn" class="header-action-btn" title="Read latest reply">
+                        <i class="fas fa-volume-high"></i>
+                        Speak
+                    </button>
+                    <input id="docInput" type="file" accept=".txt,.md,.csv,.json,.py,.js,.ts,.html,.css,.xml,.yaml,.yml,.pdf,.doc,.docx" hidden>
+                    <input id="groupImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                    <button id="regenerateBtn" class="header-action-btn" title="Regenerate last response">
+                        <i class="fas fa-rotate-right"></i>
+                        Regenerate
+                    </button>
+                    <button id="stopBtn" class="header-action-btn stop" title="Stop generating" disabled>
+                        <i class="fas fa-stop"></i>
+                        Stop
+                    </button>
+                </div>
+            </div>
+            
+            <div id="chatMessages" class="chat-messages">
+                <div class="welcome-message">
+                    <div class="welcome-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Welcome to AI Smart Assistant</h3>
+                    <p>Try a suggested prompt or upload a document to ask questions about it.</p>
+                    <div class="quick-actions">
+                        <button class="quick-prompt" data-prompt="Summarize my latest conversation in bullet points.">Summarize chat</button>
+                        <button class="quick-prompt" data-prompt="Help me write a polished email response.">Draft an email</button>
+                        <button class="quick-prompt" data-prompt="Give me a step-by-step plan to solve my current problem.">Create a plan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <textarea id="userInput" placeholder="Ask me anything..." rows="1"></textarea>
+                    <button id="sendBtn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-hint">
+                    Press Enter to send, Shift + Enter for new line
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
