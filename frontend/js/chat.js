@@ -1284,11 +1284,11 @@ function connectSocket() {
         return;
     }
 
-    socket = io('http://localhost:5000', {
+    socket = io(window.location.origin, {
         auth: {
             token
         },
-        transports: ['polling']
+        transports: ['websocket', 'polling']
     });
 
     socket.on('connect_error', () => {
