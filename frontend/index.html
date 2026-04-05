@@ -22,8 +22,22 @@
                 <a href="login.html" class="btn-login">Login</a>
                 <a href="signup.html" class="btn-signup">Sign Up</a>
             </div>
+            <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+        <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+        <nav class="mobile-nav-panel">
+            <a href="#features"><i class="fas fa-bolt"></i> Features</a>
+            <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+            <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="signup.html" class="btn-signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </nav>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -153,5 +167,22 @@
     </footer>
 
     <script src="js/utils.js"></script>
+    <script>
+        const hamburger = document.getElementById('navHamburger');
+        const drawer = document.getElementById('mobileNavDrawer');
+        const backdrop = document.getElementById('mobileNavBackdrop');
+
+        function toggleNav(open) {
+            hamburger.classList.toggle('open', open);
+            drawer.classList.toggle('open', open);
+            drawer.setAttribute('aria-hidden', String(!open));
+            hamburger.setAttribute('aria-expanded', String(open));
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', () => toggleNav(!drawer.classList.contains('open')));
+        backdrop.addEventListener('click', () => toggleNav(false));
+        drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
+    </script>
 </body>
 </html>
