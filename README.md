@@ -63,6 +63,7 @@ pip install -r requirements.txt
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-2.5-flash-lite
 MONGODB_URI=your_mongodb_connection_string
 DB_NAME=ai_assistant
 JWT_SECRET_KEY=your_long_random_jwt_secret
